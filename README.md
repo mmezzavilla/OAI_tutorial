@@ -16,3 +16,7 @@ Then, run the gdb debugger. To start, for example, set a breakpoint in the funct
 ```
 b nr_initial_sync.c:nr_scan_ssb
 ```
+Or:
+```
+b nr-ue.c:UE_thread
+```
