@@ -9,5 +9,5 @@ sudo ./nr-softmodem -O ../../../targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band
 Then, run UE in debg mode (also a B210):
 
 ```
-paste
+sudo gdb --args ./nr-uesoftmodem -r 52 --numerology 0 --band 41 -C 2593350000 --uicc0.imsi 001010000000001 --ssb 192
 ```
