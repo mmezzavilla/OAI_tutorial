@@ -27,4 +27,8 @@ $1 = {gscnInfo = {gscn = 0, ssRef = 0, ssbFirstSC = 516}, foFlag = 0, targetNidC
   nidCell = 0, freqOffset = 0, syncRes = {cell_detected = false, rx_offset = 0, frame_id = 0}, pbchResult = {decoded_output = "\000\000", xtra_byte = 0 '\000'}, pssCorrPeakPower = 0, pssCorrAvgPower = 0, adjust_rxgain = 0, 
   ans = 0x7fffd37fc4c0}
 ```
-Then, execute the next line by typing n, which stands for _next_:
+Then, execute the next line by typing n, which stands for _next_, and print, for example, the PSS sequence number:
+```
+p pss_sequence
+```
+
