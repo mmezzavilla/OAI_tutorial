@@ -1,19 +1,20 @@
 # OAI Initial Access Tutorial
 
-Run gNodeB (B210) with this command: 
+## RFSIM MODE 
+
+Open one terminal and run the gNodeB: 
 
 ```
 cd ~/openairinterface5g/cmake_targets/ran_build/build
-sudo ./nr-uesoftmodem -r 273 --numerology 1 -C 3450720000 --band 78 --uicc0.imsi 001010000000001 --ue-fo-compensation --usrp-args "type=n3xx, name=ni-n3xx-3264E25, addr=192.168.10.2, clock_source=internal, time_source=internal" -O ~/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/ue.conf --ue-nb-ant-rx 1 -d --ssb 1518 --ue-rxgain 60 --ue-txgain 20 --device.recplay.subframes-record 1 --device.recplay.subframes-file /tmp/iqfile.dat --device.recplay.use-mmap 1 --device.recplay.subframes-max 20000
+sudo ./nr-softmodem -O ../../../targets/PROJECTS/GENERIC-NR-5GC/CONF/gnb.sa.band78.fr1.106PRB.usrpb210.conf --gNBs.[0].min_rxtxtime 6 --rfsim
 ```
 
-Then, run UE in debug mode, and replay the IQ samples stored in the previous step:
+Open another terminal and run the UE with gdb:
 
 ```
-sudo gdb --args ./nr-uesoftmodem -r 273 --numerology 1 -C 3450720000 --band 78 --uicc0.imsi 001010000
-000001 --ue-fo-compensation --usrp-args "type=n3xx, name=ni-n3xx-3264E25, addr=192.168.10.2, clock_source=internal, time_source=internal" -O ~/openairinterface5g/targets/PROJECTS/GENERIC-NR-5G
-C/CONF/ue.conf --ue-nb-ant-rx 1 -d --ssb 1518 --ue-rxgain 60 --ue-txgain 20 --device.recplay.subframes-replay 1 --device.recplay.subframes-file /tmp/iqfile.dat --device.recplay.use-mmap 1
+sudo gdb --args ./nr-uesoftmodem -r 106 --numerology 1 --band 78 -C 3619200000 --uicc0.imsi 001010000000001 --rfsim
 ```
+
 
 Then, run the gdb debugger. To start, set a breakpoint in the function that performs SSB scanning (b stands for _break_; type w, or _where_, to see where you are in the code):
 ```
@@ -34,3 +35,20 @@ Then, execute the next line by typing n, which stands for _next_, and print, for
 p pss_sequence
 ```
 
+
+## IQ RECORD/PLAYER
+
+Run gNodeB with this command: 
+
+```
+cd ~/openairinterface5g/cmake_targets/ran_build/build
+sudo ./nr-uesoftmodem -r 273 --numerology 1 -C 3450720000 --band 78 --uicc0.imsi 001010000000001 --ue-fo-compensation --usrp-args "type=n3xx, name=ni-n3xx-3264E25, addr=192.168.10.2, clock_source=internal, time_source=internal" -O ~/openairinterface5g/targets/PROJECTS/GENERIC-NR-5GC/CONF/ue.conf --ue-nb-ant-rx 1 -d --ssb 1518 --ue-rxgain 60 --ue-txgain 20 --device.recplay.subframes-record 1 --device.recplay.subframes-file /tmp/iqfile.dat --device.recplay.use-mmap 1 --device.recplay.subframes-max 20000
+```
+
+Then, run UE in debug mode, and replay the IQ samples stored in the previous step:
+
+```
+sudo gdb --args ./nr-uesoftmodem -r 273 --numerology 1 -C 3450720000 --band 78 --uicc0.imsi 001010000
+000001 --ue-fo-compensation --usrp-args "type=n3xx, name=ni-n3xx-3264E25, addr=192.168.10.2, clock_source=internal, time_source=internal" -O ~/openairinterface5g/targets/PROJECTS/GENERIC-NR-5G
+C/CONF/ue.conf --ue-nb-ant-rx 1 -d --ssb 1518 --ue-rxgain 60 --ue-txgain 20 --device.recplay.subframes-replay 1 --device.recplay.subframes-file /tmp/iqfile.dat --device.recplay.use-mmap 1
+```
